@@ -29,13 +29,13 @@ class Visitor {
     return this.nickname
   }
 
-  getPin(): string {
-    return this.pin;
+  getPin (): string {
+    return this.pin
   }
 
-  validatePin(enteredPin: string): boolean {
+  validatePin (enteredPin: string): boolean {
     // Comparar el PIN proporcionado con el PIN almacenado en la entidad Visitor
-    return this.pin === enteredPin;
+    return this.pin === enteredPin
   }
 }
 

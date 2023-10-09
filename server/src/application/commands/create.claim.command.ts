@@ -56,8 +56,8 @@ class CreateClaimCommand {
     return this.cloneOf
   }
 
-  public getVisitorPin(): string {
-    return this.ownerId.getPin();
+  public getVisitorPin (): string {
+    return this.ownerId.getPin()
   }
 }
 
