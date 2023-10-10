@@ -28,8 +28,8 @@ class CreateClaimCommand {
     this.cloneOf = cloneOf
   }
 
-  public getOwnerId (): Visitor {
-    return this.ownerId
+  public getOwnerId (): string {
+    return this.ownerId.getId()
   }
 
   public getTitle (): string {
@@ -54,6 +54,10 @@ class CreateClaimCommand {
 
   public getCloneOf (): Claim | null {
     return this.cloneOf
+  }
+
+  public getVisitorPin (): string {
+    return this.ownerId.getPin()
   }
 }
 

@@ -10,11 +10,18 @@ class Claim {
   private category: Category
   private location: string
   private createdAt: Date
-  private cloneOf: null | Claim
+  private cloneOf: Claim | null
 
-  private constructor (id:string, owner: Visitor, title: string,
-    description: string, category: Category, location: string, createdAt: Date,
-    cloneOf: Claim) {
+  private constructor (
+    id: string,
+    owner: Visitor,
+    title: string,
+    description: string,
+    category: Category,
+    location: string,
+    createdAt: Date,
+    cloneOf: Claim | null
+  ) {
     this.id = id
     this.owner = owner
     this.title = title
@@ -25,8 +32,16 @@ class Claim {
     this.cloneOf = cloneOf
   }
 
-  public static create (owner: Visitor, title: string, description: string, category: Category, location: string, cloneOf: Claim) : Claim {
-    return new Claim(v4(), owner, title, description, category, location, new Date(), cloneOf)
+  public static create (
+    owner: Visitor,
+    title: string,
+    description: string,
+    category: Category,
+    location: string,
+    createdAt: Date,
+    cloneOf: Claim | null
+  ): Claim {
+    return new Claim(v4(), owner, title, description, category, location, createdAt, cloneOf)
   }
 
   public getId (): string {
