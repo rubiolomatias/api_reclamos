@@ -1,5 +1,5 @@
 import Category from '../../domain/entities/category.entity'
-import { CategoryRepository } from '../../infrastructure/repositories/category.repository'
+import categoryRepository, { CategoryRepository } from '../../infrastructure/repositories/category.repository'
 import GetCategoriesCommand from '../commands/get.categories.command'
 
 class GetCategoriesHandler {
@@ -14,4 +14,4 @@ class GetCategoriesHandler {
   }
 }
 
-export default GetCategoriesHandler
+export default new GetCategoriesHandler(categoryRepository)
