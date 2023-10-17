@@ -11,6 +11,7 @@ class Claim {
   private location: string
   private createdAt: Date
   private cloneOf: Claim | null
+  private likes: Visitor[] = []
 
   private constructor (
     id: string,
@@ -44,12 +45,22 @@ class Claim {
     return new Claim(v4(), owner, title, description, category, location, createdAt, cloneOf)
   }
 
+  public addLike (visitor: Visitor): void {
+    if (!this.likes.some((v) => v.getId() === visitor.getId())) {
+      this.likes.push(visitor)
+    }
+  }
+
   public getId (): string {
     return this.id
   }
 
   public getOwner (): Visitor {
     return this.owner
+  }
+
+  public getLikesCount (): number {
+    return this.likes.length
   }
 }
 
