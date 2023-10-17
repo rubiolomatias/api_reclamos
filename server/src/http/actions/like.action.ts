@@ -3,7 +3,7 @@ import LikeCommand from '../../application/commands/like.command'
 import LikeHandler from '../../application/handlers/like.handler'
 import VisitorRepository from '../../infrastructure/repositories/visitor.repository'
 
-class LikeClaimAction {
+class LikeAction {
   public async run (req: Request, res: Response) {
     const { claimId, visitorId } = req.body
 
@@ -15,9 +15,8 @@ class LikeClaimAction {
       }
 
       const command = new LikeCommand(claimId, visitor)
-      const handler = LikeHandler
 
-      await handler.execute(command)
+      await LikeHandler.execute(command)
 
       return res.status(200).json({ message: 'Claim liked successfully' })
     } catch (error) {
@@ -27,4 +26,4 @@ class LikeClaimAction {
   }
 }
 
-export default new LikeClaimAction()
+export default new LikeAction()

@@ -12,6 +12,7 @@ class Claim {
   private createdAt: Date
   private cloneOf: Claim | null
   private likes: Visitor[] = []
+  private dislikes: Visitor[] = []
 
   private constructor (
     id: string,
@@ -51,6 +52,12 @@ class Claim {
     }
   }
 
+  public addDislike (visitor: Visitor): void {
+    if (!this.dislikes.some((v) => v.getId() === visitor.getId())) {
+      this.dislikes.push(visitor)
+    }
+  }
+
   public getId (): string {
     return this.id
   }
@@ -60,6 +67,10 @@ class Claim {
   }
 
   public getLikesCount (): number {
+    return this.likes.length
+  }
+
+  public getDislikesCount (): number {
     return this.likes.length
   }
 }
