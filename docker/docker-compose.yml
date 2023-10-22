@@ -7,10 +7,10 @@ services:
     ports:
       - '3000:3000'
     volumes:
-      - ../server:/usr/src/service/server
-      - /usr/src/service/server/node_modules
-    working_dir: /usr/src/service/server
-    command: 'yarn start'
+      - ../server:/usr/src//server
+      - /usr/src/service//node_modules
+    working_dir: /usr/src//server
+    command: 'npm start'
 
   mongo:
     image: mongo

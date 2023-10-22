@@ -1,11 +1,16 @@
 FROM node:14-alpine
 
-COPY ["package.json", "yarn.lock", "/usr/src/service/server/"]
+# Crea el directorio de trabajo
+WORKDIR /usr/src/server
 
-WORKDIR /usr/src/service/server
+# Copia el archivo de dependencias
+COPY ["package.json", "package-lock.json", "./"]
 
-RUN yarn install --force
+# Instala las dependencias con npm
+RUN npm install
 
-COPY [".", "/usr/src/service/server/"]
+# Copia el resto de los archivos al directorio de trabajo
+COPY . .
 
-CMD ["yarn", "start"]
+# CMD para ejecutar la aplicación
+CMD ["npm", "start"]
