@@ -22,13 +22,13 @@ class ClaimRepository {
   }
 
   public async LastHourOnFire (): Promise<Claim[]> {
-    const currentTime = new Date().getTime()
+    const oneHourAgo = new Date()
+    oneHourAgo.setHours(oneHourAgo.getHours() - 1)
 
-    const lastHourClaims = this.claims
-      .filter(claim => claim.getCreatedAt().getTime() >= currentTime - 60 * 60 * 1000)
-      .slice(-5)
-
-    return lastHourClaims
+    return this.claims
+      .filter(claim => claim.getCreatedAt() >= oneHourAgo)
+      .sort((a, b) => b.getLikesCount() - a.getLikesCount())
+      .slice(0, 5)
   }
 }
 
