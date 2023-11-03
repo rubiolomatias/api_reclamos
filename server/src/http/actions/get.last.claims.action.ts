@@ -1,7 +1,7 @@
 import { Request, Response } from 'express'
 import claimRepository, { ClaimRepository } from '../../infrastructure/repositories/claim.repository'
 
-class GetOnFireClaimsAction {
+class GetLastClaimsAction {
   private claimRepository: ClaimRepository
 
   constructor (claimRepository: ClaimRepository) {
@@ -10,9 +10,9 @@ class GetOnFireClaimsAction {
 
   public async run (req: Request, res: Response) {
     try {
-      const onFireClaims = await this.claimRepository.lastHourOnFire()
+      const lastClaims = await this.claimRepository.lastClaims()
 
-      res.status(200).json(onFireClaims)
+      res.status(200).json(lastClaims)
     } catch (error) {
       const { message } = error as Error
       res.status(400).json({ message })
@@ -20,4 +20,4 @@ class GetOnFireClaimsAction {
   }
 }
 
-export default new GetOnFireClaimsAction(claimRepository)
+export default new GetLastClaimsAction(claimRepository)
