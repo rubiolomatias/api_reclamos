@@ -21,7 +21,7 @@ class ClaimRepository {
     return claim || null
   }
 
-  public async LastHourOnFire (): Promise<Claim[]> {
+  public async lastHourOnFire (): Promise<Claim[]> {
     const oneHourAgo = new Date()
     oneHourAgo.setHours(oneHourAgo.getHours() - 1)
 
@@ -29,6 +29,14 @@ class ClaimRepository {
       .filter(claim => claim.getCreatedAt() >= oneHourAgo)
       .sort((a, b) => b.getLikesCount() - a.getLikesCount())
       .slice(0, 5)
+  }
+
+  public async lastClaims (): Promise<Claim[]> {
+    const lastFiveClaims = this.claims
+      .sort((a, b) => b.getCreatedAt().getTime() - a.getCreatedAt().getTime())
+      .slice(0, 5)
+
+    return lastFiveClaims
   }
 }
 
