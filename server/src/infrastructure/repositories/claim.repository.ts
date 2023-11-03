@@ -20,6 +20,16 @@ class ClaimRepository {
 
     return claim || null
   }
+
+  public async LastHourOnFire (): Promise<Claim[]> {
+    const currentTime = new Date().getTime()
+
+    const lastHourClaims = this.claims
+      .filter(claim => claim.getCreatedAt().getTime() >= currentTime - 60 * 60 * 1000)
+      .slice(-5)
+
+    return lastHourClaims
+  }
 }
 
 export default new ClaimRepository()

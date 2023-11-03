@@ -66,6 +66,10 @@ class Claim {
     return this.owner
   }
 
+  public getCreatedAt (): Date {
+    return this.createdAt
+  }
+
   public getLikesCount (): number {
     return this.likes.length
   }
