@@ -1,5 +1,5 @@
 import { Request, Response } from 'express'
-import { ClaimRepository } from '../../infrastructure/repositories/claim.repository'
+import claimRepository, { ClaimRepository } from '../../infrastructure/repositories/claim.repository'
 
 class GetOnFireClaimsAction {
   private claimRepository: ClaimRepository
@@ -20,4 +20,4 @@ class GetOnFireClaimsAction {
   }
 }
 
-export default GetOnFireClaimsAction
+export default new GetOnFireClaimsAction(claimRepository)
