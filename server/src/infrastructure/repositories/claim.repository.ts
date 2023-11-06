@@ -38,6 +38,13 @@ class ClaimRepository {
 
     return lastFiveClaims
   }
+
+  public async lastClaimsByVisitor (visitorId: string): Promise<Claim[]> {
+    const visitorClaims = this.claims.filter(claim => claim.getOwner().getId() === visitorId)
+    const lastFiveVisitorClaims = visitorClaims.slice(-5)
+
+    return lastFiveVisitorClaims
+  }
 }
 
 export default new ClaimRepository()
