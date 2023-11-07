@@ -58,6 +58,13 @@ class Claim {
     }
   }
 
+  public report (originalClaim: Claim) {
+    if (this.createdAt.getTime() < originalClaim.createdAt.getTime()) {
+      throw new Error('Origianl claim is older than duplicated claim')
+    }
+    this.cloneOf = originalClaim
+  }
+
   public getId (): string {
     return this.id
   }
