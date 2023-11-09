@@ -29,7 +29,7 @@ describe('unit - like handler tests', () => {
     // arrange
     const visitor = Visitor.create(
       '127.0.0.1',
-      'pepito perez',
+      'Matias Rubiolo',
       '123456'
     )
 
