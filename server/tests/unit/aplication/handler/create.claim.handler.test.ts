@@ -56,7 +56,7 @@ describe('unit - create claim handler tests', () => {
     await sut.execute(command)
 
     // asserts
-    const claims = await mockClaimRepository.lastClaims() // O implementa un método para buscar la reclamación creada
+    const claims = await mockClaimRepository.lastClaims()
     expect(claims.length).toBe(1)
     const createdClaim = claims[0]
     expect(createdClaim.getOwner().getId()).toBe(visitor.getId())
