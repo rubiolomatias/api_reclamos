@@ -20,6 +20,10 @@ class VisitorRepository {
 
     return visitor || null
   }
+
+  public async getAll (): Promise<Visitor[]> {
+    return this.visitors
+  }
 }
 
 export default new VisitorRepository()
