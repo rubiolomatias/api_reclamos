@@ -1,35 +1,25 @@
-import Visitor from '../../domain/entities/visitor.entity'
-import Category from '../../domain/entities/category.entity'
-import Claim from '../../domain/entities/claim.entity'
-
 class CreateClaimCommand {
-  private readonly ownerId: Visitor
+  private readonly ownerId: string
   private readonly title: string
   private readonly description: string
-  private readonly categoryId: Category
+  private readonly categoryId: string
   private readonly location: string
-  private readonly createdAt: Date
-  private readonly cloneOf: Claim | null
 
   public constructor (
-    ownerId: Visitor,
+    ownerId: string,
     title: string,
     description: string,
-    categoryId: Category,
-    location: string,
-    createdAt: Date,
-    cloneOf: Claim) {
+    categoryId: string,
+    location: string) {
     this.ownerId = ownerId
     this.title = title
     this.description = description
     this.categoryId = categoryId
     this.location = location
-    this.createdAt = createdAt
-    this.cloneOf = cloneOf
   }
 
   public getOwnerId (): string {
-    return this.ownerId.getId()
+    return this.ownerId
   }
 
   public getTitle (): string {
@@ -40,24 +30,12 @@ class CreateClaimCommand {
     return this.description
   }
 
-  public getCategoryId (): Category {
+  public getCategoryId (): string {
     return this.categoryId
   }
 
   public getLocation (): string {
     return this.location
-  }
-
-  public getCreatedAt (): Date {
-    return this.createdAt
-  }
-
-  public getCloneOf (): Claim | null {
-    return this.cloneOf
-  }
-
-  public getVisitorPin (): string {
-    return this.ownerId.getPin()
   }
 }
 

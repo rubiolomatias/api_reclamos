@@ -33,9 +33,8 @@ class Visitor {
     return this.pin
   }
 
-  validatePin (enteredPin: string): boolean {
-    // Comparar el PIN proporcionado con el PIN almacenado en la entidad Visitor
-    return this.pin === enteredPin
+  validatePin (pin: string) {
+    return this.pin === pin
   }
 }
 

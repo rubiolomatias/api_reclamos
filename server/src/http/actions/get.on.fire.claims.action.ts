@@ -9,6 +9,13 @@ class GetOnFireClaimsAction {
   }
 
   public async run (req: Request, res: Response) {
+    const { id } = req.params
+    const { originalId } = req.body
+
+    if (!originalId || !id) {
+      res.status(400).json({ message: 'originalId is required' })
+      return
+    }
     try {
       const onFireClaims = await this.claimRepository.lastHourOnFire()
 

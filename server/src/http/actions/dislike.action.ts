@@ -1,23 +1,28 @@
 import { Request, Response } from 'express'
 import DislikeCommand from '../../application/commands/dislike.command'
-import DislikeHandler from '../../application/handlers/dislike.handler'
-import VisitorRepository from '../../infrastructure/repositories/visitor.repository'
+import dislikeHandler, { DislikeHandler } from '../../application/handlers/dislike.handler'
 
 class DislikeAction {
+  private readonly handler : DislikeHandler
+
+  constructor (handler : DislikeHandler) {
+    this.handler = handler
+  }
+
   public async run (req: Request, res: Response) {
-    const { claimId, visitorId } = req.body
+    const { claimId, visitorId, pin } = req.body
 
     try {
-      const visitor = await VisitorRepository.findOneById(visitorId)
-
-      if (!visitor) {
-        throw new Error('Visitor does not exist')
+      if (!claimId || !pin) {
+        res.status(400).json({ message: 'Claim ID and PIN are required' })
+        return
       }
 
-      const command = new DislikeCommand(claimId, visitor)
+      const command = new DislikeCommand(claimId, visitorId, pin)
 
-      await DislikeHandler.execute(command)
-      return res.status(200).json({ message: 'Claim disliked successfully' })
+      await this.handler.execute(command)
+
+      res.status(200).json({ message: 'Disliked successfully' })
     } catch (error) {
       const { message } = error as Error
       res.status(400).json({ message })
@@ -25,4 +30,4 @@ class DislikeAction {
   }
 }
 
-export default new DislikeAction()
+export default new DislikeAction(dislikeHandler)

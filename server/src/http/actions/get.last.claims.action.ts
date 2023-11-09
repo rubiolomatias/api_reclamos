@@ -1,4 +1,4 @@
-import { Request, Response } from 'express'
+import { Response } from 'express'
 import claimRepository, { ClaimRepository } from '../../infrastructure/repositories/claim.repository'
 
 class GetLastClaimsAction {
@@ -8,7 +8,7 @@ class GetLastClaimsAction {
     this.claimRepository = claimRepository
   }
 
-  public async run (req: Request, res: Response) {
+  public async run (res: Response) {
     try {
       const lastClaims = await this.claimRepository.lastClaims()
 

@@ -1,20 +1,24 @@
-import Visitor from '../../domain/entities/visitor.entity'
-
 class LikeCommand {
   private readonly claimId: string
-  private readonly visitor: Visitor
+  private readonly visitorId: string
+  private readonly pin: string
 
-  constructor (claimId: string, visitor: Visitor) {
+  constructor (claimId: string, visitorId: string, pin: string) {
     this.claimId = claimId
-    this.visitor = visitor
+    this.visitorId = visitorId
+    this.pin = pin
   }
 
   public getClaimId (): string {
     return this.claimId
   }
 
-  public getVisitor (): Visitor {
-    return this.visitor
+  public getVisitorId (): string {
+    return this.visitorId
+  }
+
+  public getPin (): string {
+    return this.pin
   }
 }
 

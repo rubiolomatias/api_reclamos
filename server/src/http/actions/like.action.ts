@@ -1,24 +1,28 @@
 import { Request, Response } from 'express'
 import LikeCommand from '../../application/commands/like.command'
-import LikeHandler from '../../application/handlers/like.handler'
-import VisitorRepository from '../../infrastructure/repositories/visitor.repository'
+import likeHandler, { LikeHandler } from '../../application/handlers/like.handler'
 
 class LikeAction {
+  private readonly handler : LikeHandler
+
+  constructor (handler : LikeHandler) {
+    this.handler = handler
+  }
+
   public async run (req: Request, res: Response) {
-    const { claimId, visitorId } = req.body
+    const { claimId, visitorId, pin } = req.body
 
     try {
-      const visitor = await VisitorRepository.findOneById(visitorId)
-
-      if (!visitor) {
-        throw new Error('Visitor does not exist')
+      if (!claimId || !pin) {
+        res.status(400).json({ message: 'Claim ID and PIN are required' })
+        return
       }
 
-      const command = new LikeCommand(claimId, visitor)
+      const command = new LikeCommand(claimId, visitorId, pin)
 
-      await LikeHandler.execute(command)
+      await this.handler.execute(command)
 
-      return res.status(200).json({ message: 'Claim liked successfully' })
+      res.status(200).json({ message: 'Disliked successfully' })
     } catch (error) {
       const { message } = error as Error
       res.status(400).json({ message })
@@ -26,4 +30,4 @@ class LikeAction {
   }
 }
 
-export default new LikeAction()
+export default new LikeAction(likeHandler)

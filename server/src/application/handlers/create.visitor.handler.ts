@@ -2,7 +2,7 @@ import Visitor from '../../domain/entities/visitor.entity'
 import visitorRepository, { VisitorRepository } from '../../infrastructure/repositories/visitor.repository'
 import CreateVisitorCommand from '../commands/create.visitor.command'
 
-class CreateVisitorHandler {
+export class CreateVisitorHandler {
   private visitorRepository: VisitorRepository
 
   public constructor (visitorRepository: VisitorRepository) {

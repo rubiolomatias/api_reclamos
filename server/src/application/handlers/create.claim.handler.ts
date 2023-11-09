@@ -1,59 +1,48 @@
 import Claim from '../../domain/entities/claim.entity'
-import Visitor from '../../domain/entities/visitor.entity'
-import claimRepository, { ClaimRepository } from '../../infrastructure/repositories/claim.repository'
 import CreateClaimCommand from '../commands/create.claim.command'
+import claimRepository, { ClaimRepository } from '../../infrastructure/repositories/claim.repository'
 import visitorRepository, { VisitorRepository } from '../../infrastructure/repositories/visitor.repository'
+import categoryRepository, { CategoryRepository } from '../../infrastructure/repositories/category.repository'
 
-class CreateClaimHandler {
+export class CreateClaimHandler {
   private visitorRepository: VisitorRepository
   private claimRepository: ClaimRepository
+  private categoryRepository: CategoryRepository
 
   public constructor (
     visitorRepository: VisitorRepository,
-    claimRepository: ClaimRepository
+    claimRepository: ClaimRepository,
+    categoryRepository: CategoryRepository
   ) {
     this.visitorRepository = visitorRepository
     this.claimRepository = claimRepository
+    this.categoryRepository = categoryRepository
   }
 
   public async execute (command: CreateClaimCommand): Promise<void> {
     // Obtener el visitante por su ID
-    const owner = await this.visitorRepository.findOneById(
-      command.getOwnerId()
-    )
+    const owner = await this.visitorRepository.findOneById(command.getOwnerId())
 
     if (!owner) {
       throw new Error('Owner does not exist')
     }
 
-    // Validar el PIN del visitante
-    const isPinValid = this.validatePin(owner, command.getVisitorPin())
+    const category = await this.categoryRepository.findOneById(command.getCategoryId())
 
-    if (!isPinValid) {
-      throw new Error('Visitor PIN is invalid')
+    if (!category) {
+      throw new Error('Category not found')
     }
 
-    // Crea el reclamo
     const claim = Claim.create(
       owner,
       command.getTitle(),
       command.getDescription(),
-      command.getCategoryId(),
-      command.getLocation(),
-      command.getCreatedAt(),
-      command.getCloneOf()
+      category,
+      command.getLocation()
     )
 
     await this.claimRepository.save(claim)
   }
-
-  private validatePin (visitor: Visitor, pin: string): boolean {
-    // Comparar el PIN proporcionado con el PIN almacenado en la entidad Visitor
-    return visitor.validatePin(pin)
-  }
 }
 
-export default new CreateClaimHandler(
-  visitorRepository,
-  claimRepository
-)
+export default new CreateClaimHandler(visitorRepository, claimRepository, categoryRepository)

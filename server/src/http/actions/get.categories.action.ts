@@ -1,17 +1,18 @@
-import { Request, Response } from 'express'
-import GetCategoriesCommand from '../../application/commands/get.categories.command'
-import GetCategoriesHandler from '../../application/handlers/get.categories.handler'
+import { Response } from 'express'
+import categoryRepository, { CategoryRepository } from '../../infrastructure/repositories/category.repository'
 
 class GetCategoriesAction {
-  public async run (req: Request, res: Response) {
-    const { categoryRepository } = req.body
+  private categoryRepository: CategoryRepository
 
+  constructor (categoryRepository: CategoryRepository) {
+    this.categoryRepository = categoryRepository
+  }
+
+  public async run (res: Response) {
     try {
-      const command = new GetCategoriesCommand(categoryRepository)
+      const getCategories = await this.categoryRepository.getAll()
 
-      await GetCategoriesHandler.execute(command)
-
-      return res.status(201).json({ message: 'Categories obtained successfully' })
+      res.status(200).json(getCategories)
     } catch (error) {
       const { message } = error as Error
       res.status(400).json({ message })
@@ -19,4 +20,4 @@ class GetCategoriesAction {
   }
 }
 
-export default new GetCategoriesAction()
+export default new GetCategoriesAction(categoryRepository)

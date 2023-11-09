@@ -1,17 +1,34 @@
 import { Request, Response } from 'express'
-import CreateClaimHandler from '../../application/handlers/create.claim.handler'
+import createClaimHandler, { CreateClaimHandler } from '../../application/handlers/create.claim.handler'
 import CreateClaimCommand from '../../application/commands/create.claim.command'
 
 class CreateClaimAction {
+  private readonly handler: CreateClaimHandler
+
+  constructor (handler: CreateClaimHandler) {
+    this.handler = handler
+  }
+
   public async run (req: Request, res: Response) {
-    const { ownerId, title, description, categoryId, location, createdAt, cloneOf } = req.body
-
+    const { owner, title, description, category, location } = req.body
     try {
-      const command = new CreateClaimCommand(ownerId, title, description, categoryId, location, createdAt, cloneOf)
+      if (!owner || !title || !description || !category || !location) {
+        res.status(400).json({ message: 'All fields are required' })
+        return
+      }
 
-      await CreateClaimHandler.execute(command)
+      const command = new CreateClaimCommand(
+        owner,
+        title,
+        description,
+        category,
+        location
+      )
+      await this.handler.execute(command)
 
-      return res.status(201).json({ message: 'Claim created successfully' })
+      res.status(201).json(
+        { message: 'Claim created sucessfully' }
+      )
     } catch (error) {
       const { message } = error as Error
       res.status(400).json({ message })
@@ -19,4 +36,4 @@ class CreateClaimAction {
   }
 }
 
-export default new CreateClaimAction()
+export default new CreateClaimAction(createClaimHandler)
