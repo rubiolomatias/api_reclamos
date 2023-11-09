@@ -9,7 +9,7 @@ class CreateVisitorAction {
     this.handler = handler
   }
 
-  public async run (req: Request, res: Response) {
+  public run = async (req: Request, res: Response) => {
     const { ip, nickname, pin } = req.body
     try {
       if (!ip || !nickname) {
@@ -17,11 +17,7 @@ class CreateVisitorAction {
         return
       }
 
-      const command = new CreateVisitorCommand(
-        ip,
-        nickname,
-        pin
-      )
+      const command = new CreateVisitorCommand(ip, nickname, pin)
 
       await this.handler.execute(command)
 

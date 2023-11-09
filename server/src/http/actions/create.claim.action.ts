@@ -9,7 +9,7 @@ class CreateClaimAction {
     this.handler = handler
   }
 
-  public async run (req: Request, res: Response) {
+  public run = async (req: Request, res: Response) => {
     const { owner, title, description, category, location } = req.body
     try {
       if (!owner || !title || !description || !category || !location) {

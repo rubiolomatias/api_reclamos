@@ -9,7 +9,7 @@ class ReportClaimAction {
     this.handler = handler
   }
 
-  public async run (req: Request, res: Response): Promise<void> {
+  public run = async (req: Request, res: Response) => {
     const { id } = req.params
     const { originalId } = req.body
 

@@ -8,7 +8,7 @@ class GetLastClaimsAction {
     this.claimRepository = claimRepository
   }
 
-  public async run (res: Response) {
+  public run = async (res: Response) => {
     try {
       const lastClaims = await this.claimRepository.lastClaims()
 

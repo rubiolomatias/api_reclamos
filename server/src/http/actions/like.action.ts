@@ -9,7 +9,7 @@ class LikeAction {
     this.handler = handler
   }
 
-  public async run (req: Request, res: Response) {
+  public run = async (req: Request, res: Response) => {
     const { claimId, visitorId, pin } = req.body
 
     try {

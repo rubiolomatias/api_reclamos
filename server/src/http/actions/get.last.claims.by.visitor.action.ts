@@ -8,7 +8,7 @@ class GetLastClaimsByVisitorAction {
     this.claimRepository = claimRepository
   }
 
-  public async run (req: Request, res: Response) {
+  public run = async (req: Request, res: Response) => {
     const { visitorId } = req.body
     try {
       const onFireClaims = await this.claimRepository.lastClaimsByVisitor(visitorId)

@@ -8,7 +8,7 @@ class GetOnFireClaimsAction {
     this.claimRepository = claimRepository
   }
 
-  public async run (req: Request, res: Response) {
+  public run = async (req: Request, res: Response) => {
     const { id } = req.params
     const { originalId } = req.body
 
