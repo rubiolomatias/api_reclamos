@@ -16,13 +16,13 @@ class ClaimRoutes extends CommonRoutes {
   public setUpRoutes (): Application {
     this.app.post('/claim', createClaimAction.run)
 
-    this.app.put('/claim/like/:id', likeAction.run)
-    this.app.put('/claim/dislike/:id', dislikeAction.run)
-    this.app.put('/claims/:id/report', reportClaimAction.run)
+    this.app.put('/claim/like', likeAction.run)
+    this.app.put('/claim/dislike', dislikeAction.run)
+    this.app.put('/claims/report', reportClaimAction.run)
 
-    this.app.get('/claims/onfires', getOnFireClaimsAction.run)
     this.app.get('/claims/latest', getLastClaimsAction.run)
-    this.app.get('/claims/:id', getLastClaimsByVisitorAction.run)
+    this.app.get('/claims/onfires', getOnFireClaimsAction.run)
+    this.app.get('/claims/visitor', getLastClaimsByVisitorAction.run)
     return this.app
   }
 }

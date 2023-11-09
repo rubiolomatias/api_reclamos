@@ -10,8 +10,7 @@ class ReportClaimAction {
   }
 
   public run = async (req: Request, res: Response) => {
-    const { id } = req.params
-    const { originalId } = req.body
+    const { id, originalId } = req.body
 
     if (!originalId || !id) {
       res.status(400).json({ message: 'originalId is required' })

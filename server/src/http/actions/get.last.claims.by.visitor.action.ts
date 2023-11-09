@@ -1,24 +1,17 @@
 import { Request, Response } from 'express'
-import claimRepository, { ClaimRepository } from '../../infrastructure/repositories/claim.repository'
+import claimRepository from '../../infrastructure/repositories/claim.repository'
 
 class GetLastClaimsByVisitorAction {
-  private claimRepository: ClaimRepository
-
-  constructor (claimRepository: ClaimRepository) {
-    this.claimRepository = claimRepository
-  }
-
   public run = async (req: Request, res: Response) => {
     const { visitorId } = req.body
     try {
-      const onFireClaims = await this.claimRepository.lastClaimsByVisitor(visitorId)
+      const categories = await claimRepository.lastClaimsByVisitor(visitorId)
 
-      res.status(200).json(onFireClaims)
+      res.status(200).json(categories)
     } catch (error) {
-      const { message } = error as Error
-      res.status(400).json({ message })
+      res.status(500).json({ error: 'Error al obtener los ultimos reclamos del visitante.' })
     }
   }
 }
 
-export default new GetLastClaimsByVisitorAction(claimRepository)
+export default new GetLastClaimsByVisitorAction()

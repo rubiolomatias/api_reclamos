@@ -22,7 +22,7 @@ class LikeAction {
 
       await this.handler.execute(command)
 
-      res.status(200).json({ message: 'Disliked successfully' })
+      res.status(200).json({ message: 'Like successfully' })
     } catch (error) {
       const { message } = error as Error
       res.status(400).json({ message })
